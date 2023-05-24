@@ -793,73 +793,73 @@ extension HTTPMethod {
     /// - Returns: The corresponding `HTTPMethod`.
     static func from(httpParserMethod: http_method) -> HTTPMethod {
         switch httpParserMethod {
-        case HTTP_DELETE:
+        case HTTP_X_DELETE:
             return .DELETE
-        case HTTP_GET:
+        case HTTP_X_GET:
             return .GET
-        case HTTP_HEAD:
+        case HTTP_X_HEAD:
             return .HEAD
-        case HTTP_POST:
+        case HTTP_X_POST:
             return .POST
-        case HTTP_PUT:
+        case HTTP_X_PUT:
             return .PUT
-        case HTTP_CONNECT:
+        case HTTP_X_CONNECT:
             return .CONNECT
-        case HTTP_OPTIONS:
+        case HTTP_X_OPTIONS:
             return .OPTIONS
-        case HTTP_TRACE:
+        case HTTP_X_TRACE:
             return .TRACE
-        case HTTP_COPY:
+        case HTTP_X_COPY:
             return .COPY
-        case HTTP_LOCK:
+        case HTTP_X_LOCK:
             return .LOCK
-        case HTTP_MKCOL:
+        case HTTP_X_MKCOL:
             return .MKCOL
-        case HTTP_MOVE:
+        case HTTP_X_MOVE:
             return .MOVE
-        case HTTP_PROPFIND:
+        case HTTP_X_PROPFIND:
             return .PROPFIND
-        case HTTP_PROPPATCH:
+        case HTTP_X_PROPPATCH:
             return .PROPPATCH
-        case HTTP_SEARCH:
+        case HTTP_X_SEARCH:
             return .SEARCH
-        case HTTP_UNLOCK:
+        case HTTP_X_UNLOCK:
             return .UNLOCK
-        case HTTP_BIND:
+        case HTTP_X_BIND:
             return .BIND
-        case HTTP_REBIND:
+        case HTTP_X_REBIND:
             return .REBIND
-        case HTTP_UNBIND:
+        case HTTP_X_UNBIND:
             return .UNBIND
-        case HTTP_ACL:
+        case HTTP_X_ACL:
             return .ACL
-        case HTTP_REPORT:
+        case HTTP_X_REPORT:
             return .REPORT
-        case HTTP_MKACTIVITY:
+        case HTTP_X_MKACTIVITY:
             return .MKACTIVITY
-        case HTTP_CHECKOUT:
+        case HTTP_X_CHECKOUT:
             return .CHECKOUT
-        case HTTP_MERGE:
+        case HTTP_X_MERGE:
             return .MERGE
-        case HTTP_MSEARCH:
+        case HTTP_X_MSEARCH:
             return .MSEARCH
-        case HTTP_NOTIFY:
+        case HTTP_X_NOTIFY:
             return .NOTIFY
-        case HTTP_SUBSCRIBE:
+        case HTTP_X_SUBSCRIBE:
             return .SUBSCRIBE
-        case HTTP_UNSUBSCRIBE:
+        case HTTP_X_UNSUBSCRIBE:
             return .UNSUBSCRIBE
-        case HTTP_PATCH:
+        case HTTP_X_PATCH:
             return .PATCH
-        case HTTP_PURGE:
+        case HTTP_X_PURGE:
             return .PURGE
-        case HTTP_MKCALENDAR:
+        case HTTP_X_MKCALENDAR:
             return .MKCALENDAR
-        case HTTP_LINK:
+        case HTTP_X_LINK:
             return .LINK
-        case HTTP_UNLINK:
+        case HTTP_X_UNLINK:
             return .UNLINK
-        case HTTP_SOURCE:
+        case HTTP_X_SOURCE:
             // This isn't ideal really.
             return .RAW(value: "SOURCE")
         default:

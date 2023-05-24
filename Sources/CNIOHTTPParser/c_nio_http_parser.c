@@ -763,7 +763,7 @@ reexecute:
           }
 
           parser->type = HTTP_REQUEST;
-          parser->method = HTTP_HEAD;
+            parser->method = HTTP_X_HEAD;
           parser->index = 2;
           UPDATE_STATE(s_req_method);
         }
@@ -943,23 +943,23 @@ reexecute:
         parser->method = (enum http_method) 0;
         parser->index = 1;
         switch (ch) {
-          case 'A': parser->method = HTTP_ACL; break;
-          case 'B': parser->method = HTTP_BIND; break;
-          case 'C': parser->method = HTTP_CONNECT; /* or COPY, CHECKOUT */ break;
-          case 'D': parser->method = HTTP_DELETE; break;
-          case 'G': parser->method = HTTP_GET; break;
-          case 'H': parser->method = HTTP_HEAD; break;
-          case 'L': parser->method = HTTP_LOCK; /* or LINK */ break;
-          case 'M': parser->method = HTTP_MKCOL; /* or MOVE, MKACTIVITY, MERGE, M-SEARCH, MKCALENDAR */ break;
-          case 'N': parser->method = HTTP_NOTIFY; break;
-          case 'O': parser->method = HTTP_OPTIONS; break;
-          case 'P': parser->method = HTTP_POST;
+            case 'A': parser->method = HTTP_X_ACL; break;
+            case 'B': parser->method = HTTP_X_BIND; break;
+            case 'C': parser->method = HTTP_X_CONNECT; /* or COPY, CHECKOUT */ break;
+          case 'D': parser->method = HTTP_X_DELETE; break;
+          case 'G': parser->method = HTTP_X_GET; break;
+          case 'H': parser->method = HTTP_X_HEAD; break;
+          case 'L': parser->method = HTTP_X_LOCK; /* or LINK */ break;
+          case 'M': parser->method = HTTP_X_MKCOL; /* or MOVE, MKACTIVITY, MERGE, M-SEARCH, MKCALENDAR */ break;
+          case 'N': parser->method = HTTP_X_NOTIFY; break;
+          case 'O': parser->method = HTTP_X_OPTIONS; break;
+          case 'P': parser->method = HTTP_X_POST;
             /* or PROPFIND|PROPPATCH|PUT|PATCH|PURGE */
             break;
-          case 'R': parser->method = HTTP_REPORT; /* or REBIND */ break;
-          case 'S': parser->method = HTTP_SUBSCRIBE; /* or SEARCH, SOURCE */ break;
-          case 'T': parser->method = HTTP_TRACE; break;
-          case 'U': parser->method = HTTP_UNLOCK; /* or UNSUBSCRIBE, UNBIND, UNLINK */ break;
+          case 'R': parser->method = HTTP_X_REPORT; /* or REBIND */ break;
+          case 'S': parser->method = HTTP_X_SUBSCRIBE; /* or SEARCH, SOURCE */ break;
+          case 'T': parser->method = HTTP_X_TRACE; break;
+          case 'U': parser->method = HTTP_X_UNLOCK; /* or UNSUBSCRIBE, UNBIND, UNLINK */ break;
           default:
             SET_ERRNO(HPE_INVALID_METHOD);
             goto error;
@@ -988,8 +988,8 @@ reexecute:
 
           switch (parser->method << 16 | parser->index << 8 | ch) {
 #define XX(meth, pos, ch, new_meth) \
-            case (HTTP_##meth << 16 | pos << 8 | ch): \
-              parser->method = HTTP_##new_meth; break;
+            case (HTTP_X_##meth << 16 | pos << 8 | ch): \
+              parser->method = HTTP_X_##new_meth; break;
 
             XX(POST,      1, 'U', PUT)
             XX(POST,      1, 'A', PATCH)
@@ -1029,7 +1029,7 @@ reexecute:
         if (ch == ' ') break;
 
         MARK(url);
-        if (parser->method == HTTP_CONNECT) {
+        if (parser->method == HTTP_X_CONNECT) {
           UPDATE_STATE(s_req_server_start);
         }
 
@@ -1105,7 +1105,7 @@ reexecute:
             UPDATE_STATE(s_req_http_H);
             break;
           case 'I':
-            if (parser->method == HTTP_SOURCE) {
+            if (parser->method == HTTP_X_SOURCE) {
               UPDATE_STATE(s_req_http_I);
               break;
             }
@@ -1836,7 +1836,7 @@ reexecute:
           parser->upgrade =
               (parser->type == HTTP_REQUEST || parser->status_code == 101);
         } else {
-          parser->upgrade = (parser->method == HTTP_CONNECT);
+          parser->upgrade = (parser->method == HTTP_X_CONNECT);
         }
 
         /* Here we call the headers_complete callback. This is somewhat
@@ -1884,7 +1884,7 @@ reexecute:
 
         hasBody = parser->flags & F_CHUNKED ||
           (parser->content_length > 0 && parser->content_length != ULLONG_MAX);
-        if (parser->upgrade && (parser->method == HTTP_CONNECT ||
+        if (parser->upgrade && (parser->method == HTTP_X_CONNECT ||
                                 (parser->flags & F_SKIPBODY) || !hasBody)) {
           /* Exit, the rest of the message is in a different protocol. */
           UPDATE_STATE(NEW_MESSAGE());
@@ -2217,7 +2217,7 @@ const char *
 c_nio_http_status_str (enum http_status s)
 {
   switch (s) {
-#define XX(num, name, string) case HTTP_STATUS_##name: return #string;
+#define XX(num, name, string) case HTTP_STATUS_X_##name: return #string;
     HTTP_STATUS_MAP(XX)
 #undef XX
     default: return "<unknown>";

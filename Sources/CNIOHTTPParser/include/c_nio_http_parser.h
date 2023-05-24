@@ -158,7 +158,7 @@ typedef int (*http_cb) (http_parser*);
 
 enum http_status
   {
-#define XX(num, name, string) HTTP_STATUS_##name = num,
+#define XX(num, name, string) HTTP_STATUS_X_##name = num,
   HTTP_STATUS_MAP(XX)
 #undef XX
   };
@@ -211,7 +211,7 @@ enum http_status
 
 enum http_method
   {
-#define XX(num, name, string) HTTP_##name = num,
+#define XX(num, name, string) HTTP_X_##name = num,
   HTTP_METHOD_MAP(XX)
 #undef XX
   };
